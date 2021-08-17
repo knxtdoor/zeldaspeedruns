@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="{{ request.LANGUAGE_CODE }}">
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <title>{% block title %}Home{% endblock %} - ZeldaSpeedRuns</title>
+    {% endblock %}
+</head>
+
+<body>
+<header>
+    {% block header %}
+    {% endblock %}
+</header>
+
+<main>
+    {% block content %}
+        {# intentionally left blank #}
+    {% endblock %}
+</main>
+
+<footer>
+    {% block footer %}
+        <p>Copyright &copy; ZeldaSpeedRuns, {% now 'Y' %}</p>
+    {% endblock %}
+</footer>
+</body>
+</html>

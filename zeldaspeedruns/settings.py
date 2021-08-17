@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
+import tempfile
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -35,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -62,6 +65,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -97,11 +102,27 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'users.User'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.discord.DiscordOAuth2',
+    'social_core.backends.twitch.TwitchOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# Python Social Auth
+# https://python-social-auth.readthedocs.io/en/latest/configuration/settings.html
+
+SOCIAL_AUTH_DISCORD_KEY = os.environ['SOCIAL_AUTH_DISCORD_KEY']
+SOCIAL_AUTH_DISCORD_SECRET = os.environ['SOCIAL_AUTH_DISCORD_SECRET']
+SOCIAL_AUTH_TWITCH_KEY = os.environ['SOCIAL_AUTH_TWITCH_KEY']
+SOCIAL_AUTH_TWITCH_SECRET = os.environ['SOCIAL_AUTH_TWITCH_SECRET']
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 LANGUAGES = (
-    ('en-us', 'English (United States)'),
+    ('en', 'English (United States)'),
 )
 
 LANGUAGE_CODE = 'en-us'
