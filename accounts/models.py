@@ -1,9 +1,8 @@
-from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext as _
 
-from users.utils import hashid_encode
+from accounts.utils import hashid_encode
 
 
 class User(AbstractUser):
