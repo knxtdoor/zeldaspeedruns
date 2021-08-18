@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Account Management{% endblock %}
+
+{% block content %}
+    <h1>Account management</h1>
+    <div id="account-management-shell" class="acm-shell">
+        <nav id="account-management-nav" class="acm-navigation">
+            <div class="acm-navigation__legend">Account</div>
+            <a href="{% url 'accounts:acm' %}" class="acm-navigation__item">Account details</a>
+            <a href="#" class="acm-navigation__item">Password</a>
+            <a href="#" class="acm-navigation__item">Connections</a>
+        </nav>
+        <div id="account-management-blade" class="acm-blade">
+            <h2 class="acm-blade__title">Account details</h2>
+            {% block blade_content %}
+                <form action="{% url 'accounts:acm' %}" method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="acm-form-field">
+                            {{ field.errors }}
+                            {{ field.label_tag }} {{ field }}
+                        </div>
+                    {% endfor %}
+                    <input type="submit" value="Submit">
+                </form>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

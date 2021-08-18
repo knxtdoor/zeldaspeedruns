@@ -1,25 +1,58 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="{{ request.LANGUAGE_CODE }}">
 <head>
+    <meta charset="UTF-8">
     {% block head %}
-        <meta charset="UTF-8">
         <title>{% block title %}Home{% endblock %} - ZeldaSpeedRuns</title>
     {% endblock %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}"/>
 </head>
 
 <body>
-<header>
+<header class="header">
     {% block header %}
+        <nav class="navigation">
+            <a href="/">
+                <img src="{% static 'logo.svg' %}" alt="ZSR Logo" class="navigation__logo"/>
+            </a>
+        </nav>
+
+        <div id="user-status" class="user-status">
+            {% if user.is_authenticated %}
+                {% if user.avatar %}
+                    <img class="user-status__avatar" src="{{ user.avatar.url }}" alt="User avatar"/>
+                {% endif %}
+                <div class="user-status__content">
+                    <span>Hi there, {{ user }}!</span>
+                    <div class="user-status-actions">
+                        <a href="{% url 'accounts:acm' %}">Manage</a>
+                        <a href="{% url 'logout' %}">Log out</a>
+                    </div>
+                </div>
+            {% else %}
+                <span>You are not signed in.</span>
+                <div class="user-status-actions">
+                    <a href="{% url 'login' %}">Log in</a>
+                </div>
+            {% endif %}
+        </div>
     {% endblock %}
 </header>
 
-<main>
+<main class="main">
     {% block content %}
         {# intentionally left blank #}
     {% endblock %}
 </main>
 
-<footer>
+<footer class="footer">
     {% block footer %}
         <p>Copyright &copy; ZeldaSpeedRuns, {% now 'Y' %}</p>
     {% endblock %}
