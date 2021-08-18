@@ -1,0 +1,20 @@
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: $triforce-gold;
+
+  &__icon {
+    width: 64px;
+    height: 64px;
+  }
+
+  &__wordmark {
+    font-size: 2.5rem;
+    font-family: $font-stack;
+    font-variant: small-caps;
+    font-weight: bold;
+    margin-left: 0.3em;
+    margin-right: 0.3em;
+  }
+}

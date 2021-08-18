@@ -1,0 +1,25 @@
+html, body {
+  height: 100vh;
+  background-color: $kokiri-green-900;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+header {
+  flex-shrink: 0;
+}
+
+main {
+  margin: 0 auto;
+  width: 60vw;
+  min-width: 800px;
+  flex: 1 0 auto;
+}
+
+footer {
+  flex-shrink: 0;
+}

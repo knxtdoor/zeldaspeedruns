@@ -1,0 +1,71 @@
+.user-status {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+
+  &__avatar {
+    width: 3em;
+    height: 3em;
+
+    background-color: black;
+    border-radius: 100%;
+  }
+
+  &__name {
+    color: white;
+    text-decoration: none;
+    font-family: $font-stack;
+    font-size: 1.35em;
+    font-weight: 500;
+    margin-right: 0.3em;
+  }
+
+  &__actions {
+    display: none;
+    visibility: hidden;
+    top: 30px;
+    right: 0;
+
+    position: absolute;
+    transition: all 0.5s ease;
+    margin-top: 1rem;
+    padding: 0.3em;
+    border-radius: 0.3em;
+    width: 200px;
+
+    background-color: $kokiri-green-900;
+  }
+
+  &:hover > &__actions,
+  &:focus-within > &__actions,
+  & &__actions:hover {
+    visibility: visible;
+    opacity: 1;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__action {
+    color: white;
+    text-decoration: none;
+    padding: 0.5em;
+    border-radius: 0.3em;
+    font-weight: 500;
+
+    &:hover {
+      background-color: $kokiri-green-800;
+    }
+
+    &--danger {
+      color: red;
+    }
+  }
+}
+
+.dropdown-separator {
+  border: 1px solid $triforce-gold;
+  margin: 0.5em;
+}

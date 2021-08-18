@@ -1,4 +1,5 @@
 {% load static %}
+{% load compress %}
 
 <!DOCTYPE html>
 <html lang="{{ request.LANGUAGE_CODE }}">
@@ -12,47 +13,57 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;400;500;600;700&display=swap"
           rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}"/>
+
+    {% compress css %}
+        <link rel="stylesheet" type="text/x-scss" href="{% static 'styles/main.scss' %}"/>
+    {% endcompress %}
 </head>
 
 <body>
-<header class="header">
+<header>
     {% block header %}
-        <nav class="navigation">
-            <a href="/">
-                <img src="{% static 'logo.svg' %}" alt="ZSR Logo" class="navigation__logo"/>
+        <div class="header__top">
+            <a class="logo" href="/">
+                <img src="{% static 'logo.svg' %}" alt="ZSR Logo" class="logo__icon"/>
+                <span class="logo__wordmark">ZeldaSpeedRuns</span>
             </a>
-        </nav>
 
-        <div id="user-status" class="user-status">
             {% if user.is_authenticated %}
-                {% if user.avatar %}
-                    <img class="user-status__avatar" src="{{ user.avatar.url }}" alt="User avatar"/>
-                {% endif %}
-                <div class="user-status__content">
-                    <span>Hi there, {{ user }}!</span>
-                    <div class="user-status-actions">
-                        <a href="{% url 'accounts:acm' %}">Manage</a>
-                        <a href="{% url 'logout' %}">Log out</a>
-                    </div>
+                <div id="user-status" class="user-status" aria-haspopup="true">
+                    {% if user.avatar %}
+                        <img class="user-status__avatar" src="{{ user.avatar.url }}" alt="User avatar"/>
+                    {% endif %}
+                    <a href="#" class="user-status__name">{{ user.username }}</a>
+                    <nav class="user-status__actions" aria-label="submenu">
+                        <a href="/accounts/profile/" class="user-status__action">Profile</a>
+                        <a href="{% url 'accounts:acm' %}" class="user-status__action">Manage account</a>
+                        <hr class="dropdown-separator"/>
+                        <a href="{% url 'logout' %}" class="user-status__action user-status__action--danger">Log out</a>
+                    </nav>
                 </div>
             {% else %}
-                <span>You are not signed in.</span>
-                <div class="user-status-actions">
-                    <a href="{% url 'login' %}">Log in</a>
+                <div id="user-status" class="user-status">
+                    <span>You are not signed in.</span>
+                    <div class="user-status-actions">
+                        <a href="{% url 'login' %}">Log in</a>
+                    </div>
                 </div>
             {% endif %}
         </div>
+        <nav class="main-navigation">
+            <a href="#" class="main-navigation__item">News</a>
+            <a href="#" class="main-navigation__item">Schedule</a>
+        </nav>
     {% endblock %}
 </header>
 
-<main class="main">
+<main>
     {% block content %}
         {# intentionally left blank #}
     {% endblock %}
 </main>
 
-<footer class="footer">
+<footer>
     {% block footer %}
         <p>Copyright &copy; ZeldaSpeedRuns, {% now 'Y' %}</p>
     {% endblock %}

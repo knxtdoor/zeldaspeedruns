@@ -19,11 +19,11 @@ class SettingsView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         user = self.request.user
-        user.username = form.data['username']
-        user.email = form.data['email']
+        user.username = form.cleaned_data['username']
+        user.email = form.cleaned_data['email']
 
-        if form.data['avatar'] or 'avatar-clear' in form.data:
-            user.avatar = form.data['avatar']
+        if form.clean()['avatar'] or 'avatar-clear' in form.cleaned_data:
+            user.avatar = form.cleaned_data['avatar']
 
         user.save()
         return super().form_valid(form)

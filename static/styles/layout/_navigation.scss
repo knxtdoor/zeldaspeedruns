@@ -1,0 +1,19 @@
+.main-navigation {
+  font-family: $font-stack;
+  background-color: $kokiri-green-800;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+
+  margin: 25px 0;
+
+  &__item {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

@@ -1,0 +1,64 @@
+.acm-shell {
+  display: grid;
+  grid-template-columns: 200px auto;
+}
+
+.acm-navigation {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-family: $font-stack;
+
+  display: flex;
+  flex-direction: column;
+
+  &__legend {
+    padding: 0.5em;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  &__item {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    background-color: $kokiri-green-700;
+    color: white;
+    text-decoration: none;
+    padding: 0.5em;
+
+    margin-bottom: 3px;
+
+    &:hover {
+      background-color: $kokiri-green-600;
+    }
+  }
+}
+
+.acm-blade {
+  background: $kokiri-green-800;
+  padding: 1em;
+  border-radius: 5px;
+  color: white;
+
+  &__title {
+    margin: 0;
+    font-weight: 600;
+  }
+}
+
+.acm-form-field {
+  display: flex;
+  flex-direction: column;
+  margin: 1em 0;
+
+  input:not(input[type=file]) {
+    padding: 0.5em 0.25em;
+    border-radius: 0.25em;
+    font-size: 1.1em;
+    font-weight: 500;
+    border: none;
+  }
+
+  label {
+    margin-bottom: 0.5em;
+  }
+}
