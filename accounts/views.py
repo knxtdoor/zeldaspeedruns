@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import FormView
+from django.views.generic import FormView, TemplateView
 
 from accounts.forms import SettingsForm
 
@@ -27,3 +27,7 @@ class SettingsView(LoginRequiredMixin, FormView):
 
         user.save()
         return super().form_valid(form)
+
+
+class ConnectionsView(LoginRequiredMixin, TemplateView):
+    template_name = 'accounts/acm_connections.html'

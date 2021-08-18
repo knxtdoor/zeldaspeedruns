@@ -25,8 +25,9 @@
   &__actions {
     display: none;
     visibility: hidden;
-    top: 30px;
+    top: 40px;
     right: 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 
     position: absolute;
     transition: all 0.5s ease;
@@ -35,7 +36,8 @@
     border-radius: 0.3em;
     width: 200px;
 
-    background-color: $kokiri-green-900;
+    background-color: $kokiri-green-800;
+    border: 2px solid $kokiri-green-700;
   }
 
   &:hover > &__actions,
@@ -56,16 +58,11 @@
     font-weight: 500;
 
     &:hover {
-      background-color: $kokiri-green-800;
+      background-color: $kokiri-green-700;
     }
 
     &--danger {
       color: red;
     }
   }
-}
-
-.dropdown-separator {
-  border: 1px solid $triforce-gold;
-  margin: 0.5em;
 }

@@ -4,3 +4,4 @@ django-libsass>=0.9.0
 social-auth-app-django>=5.0.0
 Pillow>=8.3.0
 hashids>=1.3.0
+fontawesome-free>=5.15.0

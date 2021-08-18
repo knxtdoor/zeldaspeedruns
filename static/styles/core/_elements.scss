@@ -23,3 +23,20 @@ main {
 footer {
   flex-shrink: 0;
 }
+
+button {
+  background-color: $triforce-gold;
+  color: $kokiri-green-900;
+  font-weight: bold;
+}
+
+input, button {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+hr {
+  border: 1px solid $triforce-gold;
+  width: 100%;
+}

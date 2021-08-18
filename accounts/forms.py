@@ -9,7 +9,3 @@ class SettingsForm(forms.Form):
     email = forms.EmailField(
         label='Email address',
     )
-    avatar = forms.ImageField(
-        label='Profile picture',
-        required=False,
-    )

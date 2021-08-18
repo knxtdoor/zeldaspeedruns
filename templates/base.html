@@ -14,6 +14,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;400;500;600;700&display=swap"
           rel="stylesheet">
 
+    <script src="{% static 'fontawesome_free/js/all.min.js' %}"></script>
+
     {% compress css %}
         <link rel="stylesheet" type="text/x-scss" href="{% static 'styles/main.scss' %}"/>
     {% endcompress %}
@@ -33,7 +35,10 @@
                     {% if user.avatar %}
                         <img class="user-status__avatar" src="{{ user.avatar.url }}" alt="User avatar"/>
                     {% endif %}
-                    <a href="#" class="user-status__name">{{ user.username }}</a>
+                    <a href="#" class="user-status__name">
+                        {{ user.username }}
+                        <span class="fas fa-caret-down"></span>
+                    </a>
                     <nav class="user-status__actions" aria-label="submenu">
                         <a href="/accounts/profile/" class="user-status__action">Profile</a>
                         <a href="{% url 'accounts:acm' %}" class="user-status__action">Manage account</a>

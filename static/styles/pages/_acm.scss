@@ -14,6 +14,7 @@
   &__legend {
     padding: 0.5em;
     font-weight: 500;
+    font-size: 0.9em;
     text-transform: uppercase;
   }
 
@@ -35,6 +36,7 @@
 
 .acm-blade {
   background: $kokiri-green-800;
+  border: 2px solid $kokiri-green-700;
   padding: 1em;
   border-radius: 5px;
   color: white;
@@ -48,6 +50,7 @@
 .acm-form-field {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   margin: 1em 0;
 
   input:not(input[type=file]) {
@@ -60,5 +63,35 @@
 
   label {
     margin-bottom: 0.5em;
+  }
+}
+
+.acm-connection {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: 32px 5fr auto 1fr;
+  align-items: center;
+
+  margin-bottom: 5px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__label {
+  font-size: 1.25em;
+    font-weight: bold;
+    flex-grow: 1;
+  }
+
+  &__display {
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    min-width: 200px;
+  }
+
+  &__button {
+    min-width: 100px;
   }
 }

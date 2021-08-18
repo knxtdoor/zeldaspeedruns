@@ -8,21 +8,23 @@
         <nav id="account-management-nav" class="acm-navigation">
             <div class="acm-navigation__legend">Account</div>
             <a href="{% url 'accounts:acm' %}" class="acm-navigation__item">Account details</a>
-            <a href="#" class="acm-navigation__item">Password</a>
-            <a href="#" class="acm-navigation__item">Connections</a>
+            <a href="{% url 'accounts:connections' %}" class="acm-navigation__item">Connections</a>
+            <div class="acm-navigation__legend">Security</div>
+            <a href="{% url 'password_change' %}" class="acm-navigation__item">Password</a>
         </nav>
         <div id="account-management-blade" class="acm-blade">
-            <h2 class="acm-blade__title">Account details</h2>
             {% block blade_content %}
+                <h2 class="acm-blade__title">Account details</h2>
                 <form action="{% url 'accounts:acm' %}" method="post">
                     {% csrf_token %}
                     {% for field in form %}
                         <div class="acm-form-field">
                             {{ field.errors }}
                             {{ field.label_tag }} {{ field }}
+                            {{ field.help_text }}
                         </div>
                     {% endfor %}
-                    <input type="submit" value="Submit">
+                    <button type="submit">Submit</button>
                 </form>
             {% endblock %}
         </div>
