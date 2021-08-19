@@ -21,7 +21,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
-      with:![](../../../../AppData/Local/Temp/repo-actions-settings.png)
+      with:
         python-version: ${{ matrix.python-version }}
     - name: Install Dependencies
       run: |
