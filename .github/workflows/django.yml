@@ -8,7 +8,9 @@ on:
 
 jobs:
   build:
-
+    environment:
+      name: Testing
+      url: ${{ steps.create_release.outputs.html_url }}
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -19,12 +21,17 @@ jobs:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
-      with:
+      with:![](../../../../AppData/Local/Temp/repo-actions-settings.png)
         python-version: ${{ matrix.python-version }}
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
+      env:
+        SOCIAL_AUTH_DISCORD_KEY: ${{ secrets.SOCIAL_AUTH_DISCORD_KEY }}
+        SOCIAL_AUTH_DISCORD_SECRET: ${{ secrets.SOCIAL_AUTH_DISCORD_SECRET }}
+        SOCIAL_AUTH_TWITCH_KEY: ${{ secrets.SOCIAL_AUTH_TWITCH_KEY }}
+        SOCIAL_AUTH_TWITCH_SECRET: ${{ secrets.SOCIAL_AUTH_TWITCH_SECRET }}
       run: |
         python manage.py test
