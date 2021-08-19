@@ -15,16 +15,23 @@
         <div id="account-management-blade" class="acm-blade">
             {% block blade_content %}
                 <h2 class="acm-blade__title">Account details</h2>
-                <form action="{% url 'accounts:acm' %}" method="post">
-                    {% csrf_token %}
-                    {% for field in form %}
-                        <div class="acm-form-field">
-                            {{ field.errors }}
-                            {{ field.label_tag }} {{ field }}
-                            {{ field.help_text }}
+                <p>You can use this form to manage your account details, such as your username and email address.</p>
+
+                <form action="{% url 'accounts:acm' %}" method="post" class="acm-form">
+                    {% for message in messages %}
+                        <div class="acm-form__information acm-form__information--{{ message.level_tag }}">
+                            <span class="fas fa-info-circle"></span>
+                            {{ message }}
                         </div>
                     {% endfor %}
-                    <button type="submit">Submit</button>
+
+                    {% csrf_token %}
+
+                    <table class="acm-form__table">
+                        {{ form.as_p }}
+                    </table>
+
+                    <button type="submit" class="single-field-form__button">Change</button>
                 </form>
             {% endblock %}
         </div>

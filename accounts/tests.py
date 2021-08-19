@@ -1,3 +1,58 @@
+from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.test import TestCase
+from django.urls import reverse
+from django.utils import timezone
+from django.utils.crypto import get_random_string
 
-# Create your tests here.
+from accounts.models import ConfirmationToken
+
+
+class ConfirmationTokenTests(TestCase):
+    test_username = 'testuser'
+    test_email = 'test@example.com'
+
+    def test_creation_must_fail_with_no_arguments(self):
+        self.assertRaises(ValueError, ConfirmationToken.objects.create_token, email=None)
+
+    def test_creation_must_fail_with_invalid_email(self):
+        email = 'invalidemail.com 134'
+        self.assertRaises(ValidationError, ConfirmationToken.objects.create_token, email=email)
+
+    def test_creation_must_fail_with_identical_user_email(self):
+        user = get_user_model().objects.create_user(
+            username=self.test_username,
+            email=self.test_email,
+        )
+
+        self.assertRaises(
+            ValidationError,
+            ConfirmationToken.objects.create_token,
+            email=self.test_email,
+            user=user,
+        )
+
+    def test_new_token_must_expire_in_the_future(self):
+        token = ConfirmationToken.objects.create_token(self.test_email)
+        self.assertIs(token.expires_at >= timezone.now(), True)
+
+    def test_get_token_for_email_must_return_most_recent_token(self):
+        token1 = ConfirmationToken.objects.create_token(self.test_email)
+        token2 = ConfirmationToken.objects.create_token(self.test_email)
+
+        token = ConfirmationToken.objects.get_token_for_email(self.test_email)
+        self.assertIs(token.code != token1.code and token.code == token2.code, True)
+
+    def test_code_is_only_usable_by_user(self):
+        user1 = get_user_model().objects.create_user(username='test_user1', email='user1@example.com')
+        user2 = get_user_model().objects.create_user(username='test_user2', email='user2@example.com')
+        token = ConfirmationToken.objects.create_token(email='test@example.com', user=user1)
+        self.assertIs(token.is_valid_for_user(user2), False)
+
+
+class EmailChangeViewTests(TestCase):
+    def test_reject_invalid_code(self):
+        code = get_random_string(32)
+        url = reverse('accounts:email_change', args=(code,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)

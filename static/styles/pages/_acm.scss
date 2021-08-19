@@ -42,7 +42,7 @@
   color: white;
 
   &__title {
-    margin: 0;
+    margin: 0 0 20px;
     font-weight: 600;
   }
 }
@@ -67,19 +67,21 @@
 }
 
 .acm-connection {
-  display: grid;
-  grid-gap: 5px;
-  grid-template-columns: 32px 5fr auto 1fr;
+  display: flex;
   align-items: center;
-
   margin-bottom: 5px;
 
   &:last-child {
     margin-bottom: 0;
   }
 
+  &__icon {
+    width: 32px;
+    text-align: center;
+  }
+
   &__label {
-  font-size: 1.25em;
+    font-size: 1.25em;
     font-weight: bold;
     flex-grow: 1;
   }
@@ -89,9 +91,25 @@
     border-radius: 5px;
     text-align: center;
     min-width: 200px;
+    background-color: white;
   }
 
   &__button {
     min-width: 100px;
+    margin-left: 5px;
+  }
+}
+
+.acm-connection-heading {
+  margin-top: 30px;
+  margin-bottom: 0;
+}
+
+.acm-form {
+  &__information {
+    padding: 10px;
+    border: 2px solid $kokiri-green-400;
+    border-radius: 5px;
+    background-color: $kokiri-green-500;
   }
 }

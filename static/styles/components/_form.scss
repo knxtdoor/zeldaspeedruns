@@ -1,0 +1,30 @@
+.single-field-form {
+  display: flex;
+  align-items: center;
+
+  background-color: $kokiri-green-600;
+  border-radius: 5px;
+  padding: 10px;
+
+  &__left {
+    flex-grow: 1;
+  }
+
+  &__label {
+    font-weight: bold;
+    font-size: 0.85em;
+    text-transform: uppercase;
+  }
+
+  &__button {
+    margin-left: 5px;
+  }
+
+  &__current-value {
+    color: $kokiri-green-100;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 5px;
+  }
+}

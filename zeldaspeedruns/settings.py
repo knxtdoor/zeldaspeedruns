@@ -166,6 +166,13 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Email
+# https://docs.djangoproject.com/en/3.2/topics/email/
+
+EMAIL_HOST = 'localhost'
+
+EMAIL_PORT = 1025
+
 # Django Compressor pre-compilers
 # https://django-compressor.readthedocs.io/en/latest/quickstart/#installation
 

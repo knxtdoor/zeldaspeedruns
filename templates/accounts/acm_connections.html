@@ -5,32 +5,37 @@
     <p>You can manage your connections to third-party applications here. These connections allow you to sign in to
         ZeldaSpeedRuns using the &apos;Log in with...&apos; buttons on the sign in page. If you have already signed in
         with these providers, they will appear here.</p>
-    <hr class="dropdown-separator"/>
 
+    <h3 class="acm-connection-heading">Linked accounts</h3>
+    <hr/>
     {% for backend in backends.associated %}
         <form class="acm-connection acm-connection--linked"
               method="post" action="{% url 'social:disconnect' backend.provider %}?next={{ request.path }}">
             {% csrf_token %}
-            <span class="fab fa-{{ backend.provider }} fa-lg"></span>
+            <div class="acm-connection__icon">
+                <span class="fab fa-{{ backend.provider }} fa-lg"></span>
+            </div>
             <label for="social-connection-{{ backend.provider }}" class="acm-connection__label">
                 {{ backend.provider|capfirst }}
             </label>
             <input class="acm-connection__display" id="social-connection-{{ backend.provider }}"
-                   type="text" readonly value="{{ backend.uid }}"/>
+                   type="text" readonly disabled value="{{ backend.uid }}"/>
             <button class="acm-connection__button" type="submit">Unlink</button>
         </form>
     {% endfor %}
 
+    <h3 class="acm-connection-heading">Unlinked accounts</h3>
+    <hr/>
     {% for backend in backends.not_associated %}
         <form class="acm-connection acm-connection--unlinked"
               method="post" action="{% url 'social:begin' backend %}?next={{ request.path }}">
             {% csrf_token %}
-            <span class="fab fa-{{ backend }} fa-lg"></span>
+            <div class="acm-connection__icon">
+                <span class="fab fa-{{ backend }} fa-lg"></span>
+            </div>
             <label for="social-connection-{{ backend }}" class="acm-connection__label">
                 {{ backend|capfirst }}
             </label>
-            <input class="acm-connection__display" id="social-connection-{{ backend }}"
-                   type="text" readonly value="Unlinked"/>
             <button class="acm-connection__button" type="submit">Link</button>
         </form>
     {% endfor %}
