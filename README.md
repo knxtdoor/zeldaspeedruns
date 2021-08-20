@@ -43,9 +43,9 @@ Alternatively, you can develop inside a Linux environment using WSL2.
 The application will now be running at `localhost:8000`. If the application refuses to run and spits out an error
 because of missing credentials, please see the section below on Twitch/Discord API credentials.
 
-### Configuration
+## Configuration
 
-#### Twitch/Discord API Credentials
+### Twitch/Discord API Credentials
 
 The ZSR website makes use of Discord and Twitch integration. In your `settings.py` set the values of
 `SOCIAL_AUTH_DISCORD_KEY`, `SOCIAL_AUTH_DISCORD_SECRET`, `SOCIAL_AUTH_TWITCH_KEY`, and `SOCIAL_AUTH_TWITCH_SECRET` to
@@ -54,7 +54,7 @@ your developer keys.
 - You can create a Discord API key here: https://discord.com/developers/applications
 - You can create a Twitch API key here: https://dev.twitch.tv/console
 
-#### Running with Twitch and Discord integration
+### Running with Twitch and Discord integration
 
 If you do not want to develop with Discord and Twitch functionality enabled, you can simply comment out the backends 
 and their configuration in your `settings.py` file like this:
