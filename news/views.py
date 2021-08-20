@@ -6,7 +6,7 @@ from .models import Article
 
 
 class FeedView(ListView):
-    template_name = "news/feed.html"
+    template_name = 'news/feed.html'
 
     def get_queryset(self):
         return Article.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')
@@ -14,6 +14,6 @@ class FeedView(ListView):
 
 class ArticleView(DetailView):
     model = Article
-    slug_url_kwarg = "slug"
-    slug_field = "slug"
-    template_name = "news/article.html"
+    slug_url_kwarg = 'slug'
+    slug_field = 'slug'
+    template_name = 'news/article.html'

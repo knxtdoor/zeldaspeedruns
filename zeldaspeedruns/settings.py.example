@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'social_django',
     'fontawesome_free',
     'accounts.apps.AccountsConfig',
+    'news.apps.NewsConfig',
 ]
 
 MIDDLEWARE = [
