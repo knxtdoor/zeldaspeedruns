@@ -1,19 +1,23 @@
 from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
-
-
-from zeldaspeedruns import settings
+from django.conf import settings
 
 # Create your models here.
 
 
 class ArticleManager(models.Manager):
     def create_article(self, title, content, author, pub_date):
-        if not title or not content or not author or not pub_date:
-            raise ValueError("Invalid article parameters")
+        if not title:
+            raise ValueError("Title must be supplied")
+        if not content:
+            raise ValueError("Content must be supplied")
+        if not author:
+            raise ValueError("Author must be supplied")
+        if not pub_date:
+            raise ValueError("Publish date must be supplied")
         if pub_date > timezone.now():
-            raise ValueError("Cannot be published in the future!")
+            raise ValueError("Cannot be published in the future")
         article = self.model(
             title=title,
             content=content,
