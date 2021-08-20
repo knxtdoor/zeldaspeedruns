@@ -27,6 +27,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+    - name: Create settings.py
+      run: |
+        cp zeldaspeedruns/settings.py.example zeldaspeedruns/settings.py
     - name: Run Tests
       env:
         SOCIAL_AUTH_DISCORD_KEY: ${{ secrets.SOCIAL_AUTH_DISCORD_KEY }}
