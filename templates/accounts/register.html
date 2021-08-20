@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Register</h1>
+
+    {% for message in messages %}
+        <div class="message">
+            <span class="fas fa-info-circle"></span>
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <form method="post" action="{% url 'accounts:register' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Register</button>
+    </form>
+
+    <a href="{% url 'login' %}">Already got an account? Sign in.</a>
+{% endblock %}

@@ -1,13 +1,37 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import send_mail
 from django.db import transaction
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, FormView
 
-from accounts.forms import SettingsForm
+from accounts.forms import SettingsForm, RegisterForm
 from accounts.models import ConfirmationToken
+
+
+class RegisterView(SuccessMessageMixin, FormView):
+    form_class = RegisterForm
+    template_name = 'accounts/register.html'
+    success_url = reverse_lazy('accounts:register')
+    success_message = 'Your account was created successfully. You may now sign in.'
+
+    def form_valid(self, form):
+        user = get_user_model().objects.create_user(
+            username=form.cleaned_data['username'],
+            email=form.cleaned_data['email'],
+        )
+
+        user.set_password(form.cleaned_data['password1'])
+        user.save()
+
+        return super(RegisterView, self).form_valid(form)
+
+
+class RegisterDoneView(TemplateView):
+    template_name = 'accounts/register_done.html'
 
 
 class SettingsView(LoginRequiredMixin, FormView):

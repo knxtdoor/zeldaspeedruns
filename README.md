@@ -72,7 +72,7 @@ AUTHENTICATION_BACKENDS = (
 # SOCIAL_AUTH_TWITCH_SECRET = os.environ['SOCIAL_AUTH_TWITCH_SECRET']
 ```
 
-#### SMTP Server
+### SMTP Server
 
 You may have noticed that if you tried to change or recover your password, that you will be met with an error screen.
 While the site works fine for development without an SMTP server, you may want to set one up. For development purposes

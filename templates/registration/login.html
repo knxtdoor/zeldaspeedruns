@@ -3,6 +3,7 @@
 {% block title %}Log in{% endblock %}
 
 {% block content %}
+    <h1>Log in</h1>
     {% if form.errors %}
         <p>Your username and password didn't match. Please try again.</p>
     {% endif %}
@@ -37,6 +38,6 @@
         <input type="hidden" name="next" value="{{ next }}">
     </form>
 
-    {# Assumes you setup the password_reset view in your URLconf #}
+    <a href="{% url 'accounts:register' %}">New here? Sign up for an account.</a>
     <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
 {% endblock %}
