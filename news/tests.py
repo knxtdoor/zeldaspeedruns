@@ -29,4 +29,4 @@ class ArticleModelTests(TestCase):
         u = get_user_model().objects.create_user(
             username=self.test_username, email=self.test_email)
         self.assertRaises(ValueError, Article.objects.create_article,
-                          title="Article 1", content="Content", author=u, pub_date=timezone.now()+timezone.datetime.timedelta(days=1))
+                          title="Article 1", content="Content", author=u, pub_date=timezone.now()+timezone.timedelta(days=1))
