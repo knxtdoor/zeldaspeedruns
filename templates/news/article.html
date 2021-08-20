@@ -1,6 +1,5 @@
 {% extends 'base.html' %} 
-{% comment %} {% block title%} {{article.title}} {%endblock%}  {% endcomment %}
+{% block title%} {{object.title}} {%endblock%} 
 {%block content %} 
-article
-    {% comment %} {{article.content}} {% endcomment %}
+    {{ object.content }}
 {%endblock%}
