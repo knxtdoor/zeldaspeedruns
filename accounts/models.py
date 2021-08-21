@@ -27,7 +27,7 @@ class ProfileManager(models.Manager):
         if not user:
             raise ValueError('The user must be set')
 
-        profile = self.model(user=user)
+        profile = self.model(user=user, social_identities={})
         profile.full_clean()
         profile.save(using=self._db)
 
@@ -46,8 +46,44 @@ class Profile(models.Model):
         blank=True,
         help_text=_('Profile picture that displays besides your name.'),
     )
+    social_identities = models.JSONField(default=dict, blank=True)
 
     objects = ProfileManager()
+
+    def remove_social_identity(self, provider):
+        if provider is None:
+            return
+
+        if provider in self.social_identities:
+            del self.social_identities[provider]
+
+    def update_social_identity(self, provider, identity, **kwargs):
+        if provider is None:
+            raise ValueError('provider must be set')
+        if identity is None:
+            raise ValueError('identity must be set')
+
+        visible = True
+        if provider in self.social_identities:
+            visible = self.social_identities[provider]
+
+        self.social_identities[provider] = {
+            'provider': provider,
+            'identity': identity,
+            'visible': visible,
+            **kwargs,
+        }
+
+    def clean(self):
+        super(Profile, self).clean()
+        for provider in self.social_identities:
+            identity = self.social_identities[provider]
+            if 'visible' not in identity or type(identity['visible']) != bool:
+                raise ValidationError('identity {} must have key visible set and be of type bool'.format(identity))
+            if 'provider' not in identity or type(identity['provider']) != str:
+                raise ValidationError('identity {} must have key provider set and be of type str'.format(identity))
+            if 'identity' not in identity:
+                raise ValidationError('identity {} must have key identity set'.format(identity))
 
     def __str__(self):
         return self.user.username

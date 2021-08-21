@@ -1,5 +1,7 @@
 {% extends 'accounts/acm.html' %}
 
+{% load profile_extras %}
+
 {% block blade_content %}
     <h2 class="acm-blade__title">Connections</h2>
     <p>You can manage your connections to third-party applications here. These connections allow you to sign in to
@@ -19,7 +21,7 @@
                 {{ backend.provider|capfirst }}
             </label>
             <input class="acm-connection__display" id="social-connection-{{ backend.provider }}"
-                   type="text" readonly disabled value="{{ backend.uid }}"/>
+                   type="text" readonly disabled value="{% social_identity backend.provider %}"/>
             <button class="acm-connection__button" type="submit">Unlink</button>
         </form>
     {% endfor %}
