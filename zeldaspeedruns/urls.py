@@ -19,8 +19,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from news.views import ArticleListView
+
 urlpatterns = [
-    path('', include('news.urls')),
     path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
     path('auth/', include('social_django.urls', namespace='social')),
@@ -28,6 +29,8 @@ urlpatterns = [
 ]
 
 urlpatterns += i18n_patterns(
+    path('', ArticleListView.as_view(), name='index'),
+    path('news/', include('news.urls', namespace='news')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
 )

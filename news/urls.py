@@ -1,9 +1,9 @@
 from django.urls import path
 
-from . import views
+from news import views
 
 app_name = 'news'
 urlpatterns = [
-    path('', views.FeedView.as_view(), name='feed'),
-    path('article/<slug:slug>/', views.ArticleView.as_view(), name='article'),
+    path('', views.ArticleListView.as_view(), name='feed'),
+    path('article/<slug:slug>/', views.ArticleDetailView.as_view(), name='article'),
 ]
