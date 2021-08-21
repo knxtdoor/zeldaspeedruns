@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.crypto import get_random_string
 from django.utils.translation import gettext as _
@@ -12,18 +14,50 @@ from accounts.utils import hashid_encode
 
 
 class User(AbstractUser):
-    avatar = models.ImageField(
-        upload_to='avatars',
-        null=True,
-        help_text=_('Profile picture that displays besides your name.'),
-    )
-
     @property
     def hashid(self):
         return hashid_encode(self.__class__, self.id)
 
     def __str__(self):
         return self.username
+
+
+class ProfileManager(models.Manager):
+    def create_profile(self, user):
+        if not user:
+            raise ValueError('The user must be set')
+
+        profile = self.model(user=user)
+        profile.full_clean()
+        profile.save(using=self._db)
+
+        return profile
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='profile',
+    )
+    avatar = models.ImageField(
+        upload_to='avatars',
+        null=True,
+        blank=True,
+        help_text=_('Profile picture that displays besides your name.'),
+    )
+
+    objects = ProfileManager()
+
+    def __str__(self):
+        return self.user.username
+
+
+# TODO: This should probably live in its own file
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create_profile(user=instance)
 
 
 class ConfirmationTokenManager(models.Manager):

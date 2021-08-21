@@ -32,8 +32,8 @@
 
             {% if user.is_authenticated %}
                 <div id="user-status" class="user-status" aria-haspopup="true">
-                    {% if user.avatar %}
-                        <img class="user-status__avatar" src="{{ user.avatar.url }}" alt="User avatar"/>
+                    {% if user.profile.avatar %}
+                        <img class="user-status__avatar" src="{{ user.profile.avatar.url }}" alt="User avatar"/>
                     {% endif %}
                     <a href="#" class="user-status__name">
                         {{ user.username }}

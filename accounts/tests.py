@@ -5,7 +5,21 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.crypto import get_random_string
 
-from accounts.models import ConfirmationToken
+from accounts.models import ConfirmationToken, Profile
+
+
+class ProfileTests(TestCase):
+    def test_creation_fails_with_no_user(self):
+        self.assertRaises(ValueError, Profile.objects.create_profile, user=None)
+
+    def test_profile_is_created_on_user_save(self):
+        user = get_user_model().objects.create_user(
+            username='profiletest',
+            email='profile@example.com',
+        )
+
+        user.refresh_from_db()
+        self.assertIsNot(user.profile, None)
 
 
 class ConfirmationTokenTests(TestCase):
