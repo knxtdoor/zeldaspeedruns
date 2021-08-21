@@ -111,7 +111,7 @@ AUTH_USER_MODEL = 'accounts.User'
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.discord.DiscordOAuth2',
-    'social_core.backends.twitch.TwitchOAuth2',
+    'accounts.auth.TwitchOpenIdConnect',
     'django.contrib.auth.backends.ModelBackend',
 )
 
