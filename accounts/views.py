@@ -4,9 +4,11 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import send_mail
 from django.db import transaction
+from django.http import HttpResponseForbidden
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, ListView, DeleteView
+from oauth2_provider.models import Grant
 
 from accounts.forms import SettingsForm, RegisterForm, ProfileSettingsForm
 from accounts.models import ConfirmationToken
@@ -111,3 +113,24 @@ class EmailChangeView(LoginRequiredMixin, TemplateView):
             token.save()
 
         return super().get(request, *args, **kwargs)
+
+
+class AuthorizedApplicationsListView(LoginRequiredMixin, ListView):
+    template_name = 'accounts/acm_applications.html'
+    model = Grant
+    context_object_name = 'authorized_applications'
+
+    def get_queryset(self):
+        return Grant.objects.filter(user_id__exact=self.request.user.id)
+
+
+class AuthorizedApplicationDeleteView(LoginRequiredMixin, DeleteView):
+    model = Grant
+    success_url = reverse_lazy('accounts:applications')
+
+    def delete(self, request, *args, **kwargs):
+        grant = self.get_object()
+        if grant.user == request.user:
+            super(AuthorizedApplicationDeleteView, self).delete(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden("You are not authorized to do this action.")
