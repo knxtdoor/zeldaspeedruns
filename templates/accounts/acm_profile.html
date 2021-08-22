@@ -1,0 +1,22 @@
+{% extends 'accounts/acm.html' %}
+
+{% block blade_content %}
+    <h2 class="acm-blade__title">Profile</h2>
+    <p>You can use this form to change your publicly visible user profile.</p>
+
+    {% for message in messages %}
+        <div class="message">
+            <span class="fas fa-info-circle"></span>
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <form method="post" action="{% url 'accounts:manage_profile' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.errors }}
+        {{ form.as_p }}
+
+        <button type="submit">Register</button>
+    </form>
+{% endblock %}

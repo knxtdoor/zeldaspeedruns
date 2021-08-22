@@ -8,6 +8,7 @@
         <nav id="account-management-nav" class="acm-navigation">
             <div class="acm-navigation__legend">Account</div>
             <a href="{% url 'accounts:acm' %}" class="acm-navigation__item">Account details</a>
+            <a href="{% url 'accounts:manage_profile' %}" class="acm-navigation__item">Profile</a>
             <a href="{% url 'accounts:connections' %}" class="acm-navigation__item">Connections</a>
             <div class="acm-navigation__legend">Security</div>
             <a href="{% url 'password_change' %}" class="acm-navigation__item">Password</a>

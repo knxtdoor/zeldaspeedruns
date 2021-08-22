@@ -8,7 +8,7 @@ from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, FormView
 
-from accounts.forms import SettingsForm, RegisterForm
+from accounts.forms import SettingsForm, RegisterForm, ProfileSettingsForm
 from accounts.models import ConfirmationToken
 
 
@@ -28,10 +28,6 @@ class RegisterView(SuccessMessageMixin, FormView):
         user.save()
 
         return super(RegisterView, self).form_valid(form)
-
-
-class RegisterDoneView(TemplateView):
-    template_name = 'accounts/register_done.html'
 
 
 class SettingsView(LoginRequiredMixin, FormView):
@@ -71,6 +67,23 @@ class SettingsView(LoginRequiredMixin, FormView):
             user.full_clean()
             user.save()
 
+        return super().form_valid(form)
+
+
+class ProfileSettingsView(LoginRequiredMixin, SuccessMessageMixin, FormView):
+    form_class = ProfileSettingsForm
+    template_name = 'accounts/acm_profile.html'
+    success_url = reverse_lazy('accounts:manage_profile')
+    success_message = 'Your profile has been updated successfully.'
+
+    def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.form_class
+        profile = self.request.user.profile
+        return form_class(instance=profile, **self.get_form_kwargs())
+
+    def form_valid(self, form):
+        form.save()
         return super().form_valid(form)
 
 
