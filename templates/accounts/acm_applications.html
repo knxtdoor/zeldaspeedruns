@@ -5,7 +5,7 @@
     <p>Here you can manage third-party applications that you gave access to your account.</p>
 
     {% if authorized_applications.count > 0 %}
-        <h3 class="acm-connection-heading">Linked accounts</h3>
+        <h3 class="acm-connection-heading">Applications</h3>
         <hr/>
         {% for grant in authorized_applications %}
             <form method="post" action="{% url 'accounts:delete_application' grant.id %}"

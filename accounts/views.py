@@ -3,10 +3,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import send_mail
-from django.db import transaction
 from django.http import HttpResponseForbidden
-from django.shortcuts import redirect, get_object_or_404
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView, FormView, ListView, DeleteView
 from oauth2_provider.models import Grant
 
@@ -91,28 +89,6 @@ class ProfileSettingsView(LoginRequiredMixin, SuccessMessageMixin, FormView):
 
 class ConnectionsView(LoginRequiredMixin, TemplateView):
     template_name = 'accounts/acm_connections.html'
-
-
-class EmailChangeView(LoginRequiredMixin, TemplateView):
-    template_name = 'accounts/acm_email_change_done.html'
-
-    def get(self, request, *args, **kwargs):
-        code = kwargs.get('code', None)
-        if not code:
-            raise ValueError('Code must be set')
-
-        token = get_object_or_404(ConfirmationToken, code__exact=code)
-
-        if not token.is_valid_for_user(request.user):
-            return redirect(reverse('accounts:acm'))
-
-        with transaction.atomic():
-            request.user.email = token.email
-            request.user.save()
-            token.is_used = True
-            token.save()
-
-        return super().get(request, *args, **kwargs)
 
 
 class AuthorizedApplicationsListView(LoginRequiredMixin, ListView):
