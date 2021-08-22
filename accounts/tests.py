@@ -83,11 +83,3 @@ class ConfirmationTokenTests(TestCase):
         user2 = get_user_model().objects.create_user(username='test_user2', email='user2@example.com')
         token = ConfirmationToken.objects.create_token(email='test@example.com', user=user1)
         self.assertIs(token.is_valid_for_user(user2), False)
-
-
-class EmailChangeViewTests(TestCase):
-    def test_reject_invalid_code(self):
-        code = get_random_string(32)
-        url = reverse('accounts:email_change', args=(code,))
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 404)
