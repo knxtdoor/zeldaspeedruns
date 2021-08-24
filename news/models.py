@@ -3,7 +3,6 @@ from django.urls import reverse
 from django.utils.text import slugify
 from django.utils import timezone
 from django.conf import settings
-import markdown
 
 
 class ArticleManager(models.Manager):
