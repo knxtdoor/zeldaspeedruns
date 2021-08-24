@@ -17,13 +17,3 @@ class ArticleDetailView(DetailView):
     slug_url_kwarg = 'slug'
     slug_field = 'slug'
     template_name = 'news/article.html'
-
-    def get_object(self):
-        obj = super().get_object()
-        self.markdown = obj.get_content_as_markdown()
-        return obj
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['markdown'] = self.markdown
-        return context
