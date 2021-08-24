@@ -46,6 +46,3 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
-
-    def get_content_as_markdown(self):
-        return markdown.markdown(self.content)
