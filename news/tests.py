@@ -53,3 +53,25 @@ class ArticleModelTests(TestCase):
             author=u,
             pub_date=timezone.now() + timezone.timedelta(days=1)
         )
+
+    def test_markdown_no_formatting(self):
+        m = "<p>Content</p>"
+        u = get_user_model().objects.create_user(
+            username=self.test_username, email=self.test_email)
+        a = Article.objects.create_article(
+            title="Article 1",
+            content="Content",
+            author=u,
+            pub_date=timezone.now())
+        self.assertEqual(m, a.get_content_as_markdown())
+
+    def test_markdown_with_formatting(self):
+        m = "<p>Content <em>with</em> <strong>formatting</strong></p>"
+        u = get_user_model().objects.create_user(
+            username=self.test_username, email=self.test_email)
+        a = Article.objects.create_article(
+            title="Article 1",
+            content="Content *with* **formatting**",
+            author=u,
+            pub_date=timezone.now())
+        self.assertEqual(m, a.get_content_as_markdown())

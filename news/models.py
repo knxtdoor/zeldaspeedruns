@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.utils.text import slugify
 from django.utils import timezone
 from django.conf import settings
+import markdown
 
 
 class ArticleManager(models.Manager):
@@ -33,7 +34,8 @@ class ArticleManager(models.Manager):
 class Article(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     pub_date = models.DateTimeField('date published')
     slug = models.SlugField(unique=True)
 
@@ -44,3 +46,6 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_content_as_markdown(self):
+        return markdown.markdown(self.content)
