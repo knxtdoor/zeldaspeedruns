@@ -33,7 +33,8 @@ class ArticleManager(models.Manager):
 class Article(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,
+                               on_delete=models.CASCADE)
     pub_date = models.DateTimeField('date published')
     slug = models.SlugField(unique=True)
 

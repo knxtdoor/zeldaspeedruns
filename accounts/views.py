@@ -1,8 +1,7 @@
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.mail import send_mail
 from django.http import HttpResponseForbidden
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, FormView, ListView, DeleteView
@@ -15,7 +14,8 @@ class RegisterView(SuccessMessageMixin, FormView):
     form_class = RegisterForm
     template_name = 'accounts/register.html'
     success_url = reverse_lazy('accounts:register')
-    success_message = 'Your account was created successfully. You may now sign in.'
+    success_message = 'Your account was created successfully. ' \
+                      'You may now sign in.'
 
     def form_valid(self, form):
         user = get_user_model().objects.create_user(
@@ -50,17 +50,14 @@ class SettingsView(LoginRequiredMixin, FormView):
         if user.username != username:
             user.username = username
             dirty = True
-            messages.add_message(self.request, messages.INFO, 'Your username was changed successfully.')
+            messages.add_message(self.request, messages.INFO,
+                                 'Your username was changed successfully.')
 
         if user.email != email:
-            token = ConfirmationToken.objects.create_token(email=email, user=user)
-            send_mail(
-                'Confirm your new email address',
-                token.code,
-                'hylia@zeldaspeedruns.com',
-                [email],
-            )
-            messages.add_message(self.request, messages.WARNING, 'Check your email for a confirmation message.')
+            user.email = email
+            dirty = True
+            messages.add_message(self.request, messages.INFO,
+                                 'Your email was changed successfully.')
 
         if dirty:
             user.full_clean()
@@ -106,6 +103,8 @@ class AuthorizedApplicationDeleteView(LoginRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         grant = self.get_object()
         if grant.user == request.user:
-            super(AuthorizedApplicationDeleteView, self).delete(request, *args, **kwargs)
+            super(AuthorizedApplicationDeleteView, self).delete(request, *args,
+                                                                **kwargs)
         else:
-            return HttpResponseForbidden("You are not authorized to do this action.")
+            return HttpResponseForbidden(
+                "You are not authorized to do this action.")

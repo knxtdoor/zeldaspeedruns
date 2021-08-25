@@ -1,13 +1,9 @@
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
-from django.core.validators import validate_email
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.utils import timezone
-from django.utils.crypto import get_random_string
 from django.utils.translation import gettext as _
 
 from accounts.utils import hashid_encode
@@ -79,11 +75,11 @@ class Profile(models.Model):
         for provider in self.social_identities:
             identity = self.social_identities[provider]
             if 'visible' not in identity or type(identity['visible']) != bool:
-                raise ValidationError('identity {} must have key visible set and be of type bool'.format(identity))
+                raise ValidationError('must have visible key set as bool')
             if 'provider' not in identity or type(identity['provider']) != str:
-                raise ValidationError('identity {} must have key provider set and be of type str'.format(identity))
+                raise ValidationError('must have provider key set as str')
             if 'identity' not in identity:
-                raise ValidationError('identity {} must have key identity set'.format(identity))
+                raise ValidationError('must have identity key set')
 
     def __str__(self):
         return self.user.username

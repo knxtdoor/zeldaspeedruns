@@ -5,8 +5,10 @@ class TwitchOpenIdConnect(OpenIdConnectAuth):
     """
     OpenID Connect authentication backend for Twitch using the modern API
 
-    This implementation is currently needed because Python Social Auth's Twitch backend uses an outdated API that is
-    no longer working correctly. Twitch developers recommend using their new API and OpenID Connect instead of OAuth2.
+    This implementation is currently needed because Python Social Auth's
+    Twitch backend uses an outdated API that is no longer working correctly.
+    Twitch developers recommend using their new API and OpenID Connect
+    instead of OAuth2.
 
     TODO: Remove this when our PR is accepted and update python-social-auth.
     """
@@ -14,7 +16,8 @@ class TwitchOpenIdConnect(OpenIdConnectAuth):
     USERNAME_KEY = 'preferred_username'
     OIDC_ENDPOINT = 'https://id.twitch.tv/oauth2'
     DEFAULT_SCOPE = ['openid', 'user:read:email']
-    TWITCH_CLAIMS = '{"id_token":{"email": null,"email_verified":null,"preferred_username":null,"picture":null}}'
+    TWITCH_CLAIMS = '{"id_token":{"email": null,"email_verified":null,' \
+                    '"preferred_username":null,"picture":null}}'
 
     def auth_params(self, state=None):
         params = super().auth_params(state)
@@ -41,7 +44,8 @@ def update_identities(backend, user, details, response, *args, **kwargs):
 
     if backend.name == 'discord':
         # We must further transform this to grab the discriminant, too.
-        identity = '{}#{}'.format(response['username'], response['discriminator'])
+        identity = '{}#{}'.format(response['username'],
+                                  response['discriminator'])
 
     user.profile.update_social_identity(backend.name, identity)
     user.profile.save()
