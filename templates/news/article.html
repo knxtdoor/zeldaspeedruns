@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
-
+{% load news_extras %}
 {% block title %}{{ object.title }}{% endblock %}
 
 {% block content %}
     <h1>{{ article.title }}</h1>
     <div>Posted by <strong>{{ article.author }}</strong> on <em>{{ article.pub_date }}</em></div>
-    <div>{{ article.content }}</div>
+    {% autoescape off%}
+    <div>{{ article.content|markdown}}</div>
+    {% endautoescape %}
 {% endblock %}
