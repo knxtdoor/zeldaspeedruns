@@ -9,7 +9,6 @@ from django.views.generic import TemplateView, FormView, ListView, DeleteView
 from oauth2_provider.models import Grant
 
 from accounts.forms import SettingsForm, RegisterForm, ProfileSettingsForm
-from accounts.models import ConfirmationToken
 
 
 class RegisterView(SuccessMessageMixin, FormView):
