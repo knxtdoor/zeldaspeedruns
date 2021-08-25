@@ -23,7 +23,8 @@ from news.views import ArticleListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('oauth2/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    path('oauth2/', include('oauth2_provider.urls',
+                            namespace='oauth2_provider')),
     path('i18n/', include('django.conf.urls.i18n')),
     path('auth/', include('social_django.urls', namespace='social')),
     path('api-auth/', include('rest_framework.urls')),

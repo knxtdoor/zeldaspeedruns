@@ -8,7 +8,9 @@ class ArticleListView(ListView):
     template_name = 'news/feed.html'
 
     def get_queryset(self):
-        return Article.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')
+        return Article.objects.filter(
+            pub_date__lte=timezone.now()
+        ).order_by('-pub_date')
 
 
 class ArticleDetailView(DetailView):

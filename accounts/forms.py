@@ -6,7 +6,8 @@ from accounts.models import User, Profile
 
 
 class SettingsForm(forms.Form):
-    username = forms.CharField(max_length=32, validators=[UnicodeUsernameValidator])
+    username = forms.CharField(max_length=32,
+                               validators=[UnicodeUsernameValidator])
     email = forms.EmailField()
 
 
