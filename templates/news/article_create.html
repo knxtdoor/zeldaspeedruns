@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load news_extras %}
+{% block title %}New Article{% endblock %}
+
+{% block content %}
+    <form action="/news/new" method="post">
+    {%csrf_token%}
+    {{ form }}
+    <input type="submit" value="Submit">
+    </form>
+    <div>
+        Preview:
+        <h1>{{ article.title }}</h1>
+        <div>Posted by <strong>{{ article.author }}</strong> on <em>{{ article.pub_date }}</em></div>
+        {% autoescape off%}
+        <div>{{ article.content|markdown}}</div>
+        {% endautoescape %}
+    </div>
+{% endblock %}

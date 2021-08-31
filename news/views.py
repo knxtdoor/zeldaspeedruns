@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.utils import timezone
 
 from news.models import Article
@@ -19,3 +19,9 @@ class ArticleDetailView(DetailView):
     slug_url_kwarg = 'slug'
     slug_field = 'slug'
     template_name = 'news/article.html'
+
+
+class ArticleCreateView(CreateView):
+    model = Article
+    fields = ['title', 'content', 'pub_date']
+    template_name = "news/article_create.html"
